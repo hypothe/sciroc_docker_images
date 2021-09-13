@@ -7,7 +7,7 @@ RUN apt-get install ros-melodic-smach ros-melodic-smach-ros ros-melodic-executiv
 WORKDIR ${REPO_WS}/src
 RUN git clone https://github.com/Omotoye/tiago_tts \
 		&& git clone https://github.com/Omotoye/sciroc_hri.git \
-		&& git clone https://github.com/hypothe/dialogflow_ros.git -b melodic_custom \
+		&& git clone https://github.com/cakmakcan/dialogflow_ros.git -b melodic_up \
 		&& git clone --recursive https://github.com/Omotoye/SciRoc2EP1.git
 		#&& git clone https://github.com/cakmakcan/dialogflow_ros.git -b melodic_custom \
 
