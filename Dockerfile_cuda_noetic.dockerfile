@@ -16,10 +16,10 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -sc` main" \
         > /etc/apt/sources.list.d/ros-latest.list \
 		&& wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
 RUN sudo apt-get update \
-		&& apt-get install python3-catkin-tools
+		&& apt-get install python3-catkin-tools -y
 # Initialize the workspace
 RUN source /opt/ros/noetic/setup.bash && \
-		catkin init \
+		catkin init && catkin build \
     && echo "source ${REPO_WS}/devel/setup.bash" >> ${HOME}/.bashrc \
 		&& echo "source /opt/ros/noetic/setup.bash" >> ${HOME}/.bashrc 
     # Add below line to automatically source your packages
@@ -43,8 +43,8 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86
 WORKDIR  ${REPO_WS}
 # Install extra tools
 RUN apt-get update && apt-get install -y gdb
+RUN ls && ls devel
 RUN source ${HOME}/.bashrc \
-    && source devel/setup.bash \
-    && catkin build
+    && catkin build 
 
 ENTRYPOINT ["bash"]
