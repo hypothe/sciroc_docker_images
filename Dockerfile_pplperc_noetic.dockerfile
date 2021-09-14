@@ -36,6 +36,4 @@ RUN rosdep update && rosdep install --from-paths src --ignore-src --rosdistro no
 RUN source ${HOME}/.bashrc \
     && catkin build
 
-
-
 ENTRYPOINT ["bash"]

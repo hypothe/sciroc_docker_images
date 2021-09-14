@@ -5,47 +5,47 @@ networks:
     driver: bridge
 
 services:
-
-	meta:
+  meta:
     image: hypothe/sciroc:meta-noetic
-    command: roslaunch sciroc_meta sciroc_meta_load.launch
+    command: -c "source devel/setup.bash && roslaunch sciroc_meta sciroc_meta_load.launch"
     networks:
       - ros
   ####    
-	logic:
-    image: hypothe/sciroc:logic-noetic
-    depends_on:
-      - pplperc
-      - objdet
-      - hri
-    command: roslaunch sciroc_logic sciroc_control.launch
-    networks:
-      - ros
-    restart: always
+  #logic:
+  #  image: hypothe/sciroc:logic-noetic
+  #  depends_on:
+  #    - pplperc
+  #    - objdet
+  #    - hri
+  #  command: roslaunch sciroc_logic sciroc_control.launch
+  #  networks:
+  #    - ros
+  #  restart: always
   ###
-	pplperc:
+  pplperc:
     image: hypothe/sciroc:pplperc-noetic
     depends_on:
       - meta
-    command: roslaunch people_perception people_perception.launch
+    command: -c "source devel/setup.bash && roslaunch people_perception people_perception.launch"
     networks:
       - ros
     restart: always
   ###
-	objdet:
+  objdet:
     image: hypothe/sciroc:objdet-yolov5-noetic
     depends_on:
       - meta
-    command: roslaunch sciroc_objdet sciroc_objdet_whole_module.launch
+    command: -c "source devel/setup.bash && roslaunch sciroc_objdet sciroc_objdet_whole_module.launch"
     networks:
       - ros
     restart: always
   ###
-	hri:
+  hri:
     image: hypothe/sciroc:hri-noetic
     depends_on:
       - meta
-    command: rosrun sciroc_hri sciroc_hri.launch
+    command: -c "source devel/setup.bash && roslaunch sciroc_hri sciroc_hri.launch"
     networks:
       - ros
     restart: always
+  ###

@@ -17,12 +17,12 @@ RUN rosdep update && rosdep install --from-paths src --ignore-src --rosdistro no
 
 WORKDIR ${REPO_WS}/src
 
-RUN git clone https://github.com/hypothe/sciroc_meta.git -b yolov5
+RUN git clone https://github.com/hypothe/sciroc_meta.git -b load-nodep
 
 ## Do not build, as it depends on all the other containers
 ## one way to still do that would be to 
 #WORKDIR ${REPO_WS}
-#RUN source ${HOME}/.bashrc \
-#    && catkin build 
-
+RUN source ${HOME}/.bashrc \
+    && catkin build 
+WORKDIR ${REPO_WS}
 ENTRYPOINT ["bash"]
