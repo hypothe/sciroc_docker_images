@@ -29,7 +29,7 @@ services:
     command: -c "source devel/setup.bash && roslaunch people_perception people_perception.launch"
     networks:
       - ros
-    restart: always
+    #restart: always
   ###
   objdet:
     image: hypothe/sciroc:objdet-yolov5-noetic
@@ -38,7 +38,7 @@ services:
     command: -c "source devel/setup.bash && roslaunch sciroc_objdet sciroc_objdet_whole_module.launch"
     networks:
       - ros
-    restart: always
+    #restart: always
   ###
   hri:
     image: hypothe/sciroc:hri-noetic
@@ -47,5 +47,5 @@ services:
     command: -c "source devel/setup.bash && roslaunch sciroc_hri sciroc_hri.launch"
     networks:
       - ros
-    restart: always
+    #restart: always
   ###
