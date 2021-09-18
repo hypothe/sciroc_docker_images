@@ -5,7 +5,7 @@ ENV REPO_WS=/home/user/ws
 SHELL ["/bin/bash", "-c"]
 
 # Install ROS packages
-COPY ./gpu_config.sh ${REPO_WS}
+COPY ./gpu_config.sh ${REPO_WS}/
 WORKDIR ${REPO_WS}/src
 
 RUN apt-get update\
