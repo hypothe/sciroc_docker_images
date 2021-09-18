@@ -10,7 +10,7 @@ WORKDIR ${REPO_WS}/src
 
 RUN apt-get update\
     && apt-get install git curl python3.8 python3-pip ros-noetic-usb-cam ros-noetic-image-view ros-noetic-rqt ros-noetic-rqt-common-plugins -y 
-RUN git clone --recursive https://github.com/hypothe/sciroc2021_objdet_meta.git -b yolov5
+RUN git clone --recursive https://github.com/hypothe/sciroc2021_objdet_meta.git -b yolov5-noetic
 #RUN python -m pip install 'pip==20.3.4'
 RUN pip3 install --upgrade setuptools \
     && pip3 install --upgrade pip
