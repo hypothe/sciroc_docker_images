@@ -11,7 +11,7 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -sc` main" \
         > /etc/apt/sources.list.d/ros-latest.list \
 		&& wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
 RUN sudo apt-get update \
-		&& apt-get install python3-catkin-tools -y
+		&& DEBIAN_FRONTEND=noninteractive apt-get install python3-catkin-tools -y
 RUN source /opt/ros/noetic/setup.bash \
 		&& mkdir src && catkin init && catkin build \
     && echo "source ${REPO_WS}/devel/setup.bash" >> ${HOME}/.bashrc \
@@ -23,7 +23,7 @@ COPY ./gpu_config.sh ${REPO_WS}/
 WORKDIR ${REPO_WS}/src
 
 RUN apt-get update\
-    && apt-get install git curl python3.8 python3-pip ros-noetic-usb-cam ros-noetic-image-view ros-noetic-rqt ros-noetic-rqt-common-plugins -y 
+    && DEBIAN_FRONTEND=noninteractive && apt-get install git curl python3.8 python3-pip -y 
 RUN git clone --recursive https://github.com/hypothe/sciroc2021_objdet_meta.git -b yolov5
 #RUN python -m pip install 'pip==20.3.4'
 RUN pip3 install --upgrade setuptools \
@@ -42,7 +42,7 @@ RUN git clone https://github.com/hypothe/sciroc_image_bridge image_bridge \
 #RUN apt update && apt install ros-melodic-movie-publisher -y
 WORKDIR  ${REPO_WS}
 RUN rosdep update && rosdep install --from-paths src --ignore-src --rosdistro noetic -y
-RUN apt-get install ros-noetic-control-msgs
+RUN DEBIAN_FRONTEND=noninteractive apt-get install ros-noetic-control-msgs ros-noetic-usb-cam ros-noetic-image-view ros-noetic-rqt ros-noetic-rqt-common-plugins -y
 RUN source ${HOME}/.bashrc \
     && source ${REPO_WS}/devel/setup.bash \
     && catkin build
