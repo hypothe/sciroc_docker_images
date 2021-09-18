@@ -1,9 +1,23 @@
-FROM hypothe/sciroc:cuda11.4-noetic
-
-ENV REPO_WS=/home/user/ws
+FROM ros:noetic-ros-base-focal
 
 SHELL ["/bin/bash", "-c"]
+ENV REPO_WS=/home/user/ws
 
+WORKDIR ${REPO_WS}
+RUN apt update && DEBIAN_FRONTEND=noninteractive apt install dpkg git curl wget  -y
+# Install catkin_tools
+
+RUN echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -sc` main" \
+        > /etc/apt/sources.list.d/ros-latest.list \
+		&& wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+RUN sudo apt-get update \
+		&& apt-get install python3-catkin-tools -y
+RUN source /opt/ros/noetic/setup.bash \
+		&& mkdir src && catkin init && catkin build \
+    && echo "source ${REPO_WS}/devel/setup.bash" >> ${HOME}/.bashrc \
+		&& echo "source /opt/ros/noetic/setup.bash" >> ${HOME}/.bashrc 
+
+RUN source ${HOME}/.bashrc && rosdep update && rosdep install --from-paths src --rosdistro noetic --ignore-src -y 
 # Install ROS packages
 COPY ./gpu_config.sh ${REPO_WS}/
 WORKDIR ${REPO_WS}/src
@@ -30,9 +44,9 @@ WORKDIR  ${REPO_WS}
 RUN rosdep update && rosdep install --from-paths src --ignore-src --rosdistro noetic -y
 RUN apt-get install ros-noetic-control-msgs
 RUN source ${HOME}/.bashrc \
-    && source devel/setup.bash \
+    && source ${REPO_WS}/devel/setup.bash \
     && catkin build
 
-COPY catkin_build_vsconf.py ${REPO_WS}
+COPY catkin_build_vsconf.py ${REPO_WS}/
 
 ENTRYPOINT ["bash"]
