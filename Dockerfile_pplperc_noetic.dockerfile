@@ -1,6 +1,8 @@
 FROM ros:noetic-ros-base-focal
 
 ENV HOME=/root
+ENV REPO_WS=/home/user/ws
+
 WORKDIR ${HOME}
 RUN sudo apt-get update\
     && sudo apt-get install git python3.8 python3-pip ros-noetic-cv-bridge -y
