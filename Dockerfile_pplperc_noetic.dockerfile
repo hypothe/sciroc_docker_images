@@ -1,5 +1,4 @@
-#FROM registry.gitlab.com/competitions4/sciroc/dockers/sciroc
-FROM hypothe/sciroc:cuda11.4-noetic
+FROM ros:noetic-ros-base-focal
 
 ENV HOME=/root
 WORKDIR ${HOME}
@@ -33,6 +32,7 @@ RUN git clone https://github.com/AliceNardelli/images
 
 WORKDIR  ${REPO_WS}
 RUN rosdep update && rosdep install --from-paths src --ignore-src --rosdistro noetic -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get install ros-noetic-usb-cam ros-noetic-image-view ros-noetic-rqt ros-noetic-rqt-common-plugins -y
 RUN source ${HOME}/.bashrc \
     && catkin build
 
