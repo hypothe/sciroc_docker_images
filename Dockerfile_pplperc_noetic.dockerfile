@@ -1,5 +1,6 @@
 FROM ros:noetic-ros-base-focal
 
+SHELL ["/bin/bash", "-c"]
 ENV HOME=/root
 ENV REPO_WS=/home/user/ws
 
